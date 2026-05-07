@@ -108,7 +108,7 @@ INSERT INTO exhibits (habitat_id, name, description, image, type) VALUES
  '/images/exhibit-rockpool.jpg',
  'Experience'),
 (4, 'Puffin Cliff',
- 'Rescued Atlantic puffins on a recreated cliff face. You will see more of them in spring when they are breeding.',
+ 'Rescued Atlantic puffins on a recreated cliff face. You will see more of them in spring, that is the best time to visit this one.',
  '/images/exhibit-puffin.jpg',
  'Exhibit'),
 

@@ -34,7 +34,7 @@ if (!dbExists) {
 }
 
 
-// Homepage
+// home
 app.get('/', (req, res) => {
     db.all('SELECT * FROM habitats ORDER BY id', (err, habitats) => {
         if (err) {
@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
     });
 });
 
-// All habitats listing
+// all habitats
 app.get('/habitats', (req, res) => {
     db.all('SELECT * FROM habitats ORDER BY id', (err, habitats) => {
         if (err) {
@@ -56,7 +56,7 @@ app.get('/habitats', (req, res) => {
     });
 });
 
-// Single habitat with its exhibits
+// single habitat + its exhibits
 app.get('/habitat/:id', (req, res) => {
     const habitatId = req.params.id;
 
@@ -82,21 +82,21 @@ app.get('/habitat/:id', (req, res) => {
     });
 });
 
-// Faq page
+// faq
 app.get('/faq', (req, res) => {
     res.render('faq');
 });
 
-// Contact page
+// contact
 app.get('/contact', (req, res) => {
     res.render('contact', { submitted: false, errors: null });
 });
 
-// Contact form submit
+// contact form post
 app.post('/contact', (req, res) => {
     const { name, email, subject, message } = req.body;
 
-    // Validation server side
+    // server validation
     const errors = [];
     if (!name || name.trim().length < 2) errors.push('Name must be at least 2 characters.');
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Please enter a valid email.');

@@ -1,7 +1,7 @@
 // contact form validation
 
 const form = document.getElementById('contactForm')
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const emailRegex = /\S+@\S+\.\S+/
 
 function showError(input, errSpan, msg) {
     input.classList.add('invalid')
@@ -48,8 +48,8 @@ form.addEventListener('submit', function(e) {
         valid = false
     }
 
-    if (message.value.trim().length < 10) {
-        showError(message, messageErr, 'Message needs to be at least 10 characters.')
+    if (message.value.trim().length < 20) {
+        showError(message, messageErr, 'Message needs to be at least 20 characters.')
         valid = false
     }
 
