@@ -49,8 +49,8 @@ app.get('/', (req, res) => {
 app.get('/habitats', (req, res) => {
     db.all('SELECT * FROM habitats ORDER BY id', (err, habitats) => {
         if (err) {
-            console.error(err);
-            return res.status(500).send('Database error');
+            console.error('habitats query failed', err);
+            return res.status(500).send('Something went wrong');
         }
         res.render('habitats', { habitats });
     });
@@ -73,7 +73,7 @@ app.get('/habitat/:id', (req, res) => {
             [habitatId],
             (err2, exhibits) => {
                 if (err2) {
-                    console.error(err2);
+                    console.error('exhibits query failed:', err2);
                     return res.status(500).send('Database error');
                 }
                 res.render('habitat', { habitat, exhibits });
