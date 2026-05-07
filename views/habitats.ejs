@@ -1,0 +1,27 @@
+<%- include('partials/header', {
+    pageTitle: 'Habitats - Eco-Adventure Wildlife Park',
+    heroTitle: 'Our Habitats',
+    heroSubtitle: 'Five themed areas, each with its own character',
+    heroImage: '/images/hero-habitats.jpg'
+}) %>
+
+<section class="page-content">
+    <p class="lead">
+        Our park consists of 5 distinct habitats, each one houses exhibits and experiences. You can visit them however you want! simply click any habitat to view it.
+    </p>
+
+    <div class="card-grid">
+        <% habitats.forEach(function(habitat) { %>
+            <a class="habitat-card" href="/habitat/<%= habitat.id %>" style="--accent: <%= habitat.accent_colour %>;">
+                <div class="card-image" style="background-image: url('<%= habitat.image %>');" role="img" aria-label="<%= habitat.name %>"></div>
+                <div class="card-body">
+                    <h3><%= habitat.name %></h3>
+                    <p><%= habitat.short_description %></p>
+                    <span class="card-link">View habitat &rarr;</span>
+                </div>
+            </a>
+        <% }); %>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

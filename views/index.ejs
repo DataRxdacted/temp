@@ -1,0 +1,45 @@
+<%- include('partials/header', {
+    pageTitle: 'Home - Eco-Adventure Wildlife Park',
+    heroTitle: 'Eco-Adventure Wildlife Park',
+    heroSubtitle: 'Habitats, exhibits and outdoor experiences for everyone',
+    heroImage: '/images/hero-home.jpg'
+}) %>
+
+<section class="intro">
+    <h2>Welcome to the park</h2>
+    <p>
+        Welcome to the Eco Adventure Wildlife Park, this is the place to slow down and look closely in order to learn something about the beauty of the natural world! This park is divided into 5 habitats that consist of their own animals, exhibits and hand on experiences.
+    </p>
+    <p>
+        This park greaty values its animals and therefore animals come first, our keepers can chat about anything you see.
+    </p>
+</section>
+
+<section class="habitats-grid">
+    <h2>Explore our habitats</h2>
+    <div class="card-grid">
+        <% habitats.forEach(function(habitat) { %>
+            <a class="habitat-card" href="/habitat/<%= habitat.id %>" style="--accent: <%= habitat.accent_colour %>;">
+                <div class="card-image" style="background-image: url('<%= habitat.image %>');" role="img" aria-label="<%= habitat.name %>"></div>
+                <div class="card-body">
+                    <h3><%= habitat.name %></h3>
+                    <p><%= habitat.short_description %></p>
+                    <span class="card-link">View habitat &rarr;</span>
+                </div>
+            </a>
+        <% }); %>
+    </div>
+</section>
+
+<section class="quick-info">
+    <div class="info-block">
+        <h3>Plan your visit</h3>
+        <p>The park is open <strong>every day, 9am to 6pm</strong>. Last entry is at 5pm. Most visitors spend three to four hours on site.</p>
+    </div>
+    <div class="info-block">
+        <h3>Got questions?</h3>
+        <p>Our <a href="/faq">FAQ page</a> answers the most common ones, or you can <a href="/contact">drop us a message</a> and we will get back to you.</p>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,38 @@
+<%- include('partials/header', {
+    pageTitle: habitat.name + ' - Eco-Adventure Wildlife Park',
+    heroTitle: habitat.name,
+    heroSubtitle: habitat.short_description,
+    heroImage: habitat.image
+}) %>
+
+<section class="page-content" style="--accent: <%= habitat.accent_colour %>;">
+
+    <a class="back-link" href="/habitats">&larr; Back to all habitats</a>
+
+    <div class="habitat-detail">
+        <h2>About <%= habitat.name %></h2>
+        <p><%= habitat.long_description %></p>
+    </div>
+
+    <h2 class="section-heading">Exhibits &amp; experiences</h2>
+
+    <% if (exhibits.length === 0) { %>
+        <p>No exhibits listed yet.</p>
+    <% } else { %>
+        <div class="exhibit-list">
+            <% exhibits.forEach(function(exhibit) { %>
+                <article class="exhibit-card">
+                    <div class="exhibit-image" style="background-image: url('<%= exhibit.image %>');" role="img" aria-label="<%= exhibit.name %>"></div>
+                    <div class="exhibit-body">
+                        <span class="exhibit-tag exhibit-tag--<%= exhibit.type.toLowerCase() %>"><%= exhibit.type %></span>
+                        <h3><%= exhibit.name %></h3>
+                        <p><%= exhibit.description %></p>
+                    </div>
+                </article>
+            <% }); %>
+        </div>
+    <% } %>
+
+</section>
+
+<%- include('partials/footer') %>
