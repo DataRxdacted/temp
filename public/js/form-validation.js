@@ -1,87 +1,146 @@
 
-
 // Simple clientside validation
 
-(function () {
-    "use strict";
+const form = document.getElementById("contactForm");
 
-    const form = document.getElementById("contactForm");
-    if (!form) return;
+const nameInput = document.getElementById("name");
+const nameErr = document.getElementById("name-error");
 
-    const fields = {
-        name:    { el: document.getElementById("name"),    err: document.getElementById("name-error"),    minLen: 2  },
-        email:   { el: document.getElementById("email"),   err: document.getElementById("email-error"),   minLen: 5  },
-        subject: { el: document.getElementById("subject"), err: document.getElementById("subject-error"), minLen: 3  },
-        message: { el: document.getElementById("message"), err: document.getElementById("message-error"), minLen: 10 }
-    };
+const emailInput = document.getElementById("email");
+const emailErr = document.getElementById("email-error");
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const subjectInput = document.getElementById("subject");
+const subjectErr = document.getElementById("subject-error");
 
-    // Validate one field and returns true if its valid.
-    function validateField(key) {
-        const field = fields[key];
-        const value = field.el.value.trim();
+const messageInput = document.getElementById("message");
+const messageErr = document.getElementById("message-error");
 
-        // Nothing in the input
-        if (value.length === 0) {
-            showError(field, "This field is required.");
-            return false;
+// Checking if a valid email is aactually entered
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// validate name on blur
+nameInput.addEventListener("blur", function () {
+    if (nameInput.value.trim().length === 0) {
+        nameErr.textContent = "This field is required.";
+        nameInput.classList.add("invalid");
+    } else if (nameInput.value.trim().length < 2) {
+        nameErr.textContent = "Please enter at least 2 characters.";
+        nameInput.classList.add("invalid");
+    } else {
+        nameErr.textContent = "";
+        nameInput.classList.remove("invalid");
+    }
+});
+
+nameInput.addEventListener("input", function () {
+    if (nameInput.classList.contains("invalid")) {
+        if (nameInput.value.trim().length >= 2) {
+            nameErr.textContent = "";
+            nameInput.classList.remove("invalid");
         }
+    }
+});
 
-        // Checks the length
-        if (value.length < field.minLen) {
-            showError(field, "Please enter at least " + field.minLen + " characters.");
-            return false;
+// validate email on blur
+emailInput.addEventListener("blur", function () {
+    if (emailInput.value.trim().length === 0) {
+        emailErr.textContent = "This field is required.";
+        emailInput.classList.add("invalid");
+    } else if (!emailPattern.test(emailInput.value.trim())) {
+        emailErr.textContent = "Please enter a valid email address.";
+        emailInput.classList.add("invalid");
+    } else {
+        emailErr.textContent = "";
+        emailInput.classList.remove("invalid");
+    }
+});
+
+emailInput.addEventListener("input", function () {
+    if (emailInput.classList.contains("invalid")) {
+        if (emailPattern.test(emailInput.value.trim())) {
+            emailErr.textContent = "";
+            emailInput.classList.remove("invalid");
         }
+    }
+});
 
-        // Checking if a valid email is aactually entered
-        if (key === "email" && !emailPattern.test(value)) {
-            showError(field, "Please enter a valid email address.");
-            return false;
+// validate subject on blur
+subjectInput.addEventListener("blur", function () {
+    if (subjectInput.value.trim().length === 0) {
+        subjectErr.textContent = "This field is required.";
+        subjectInput.classList.add("invalid");
+    } else if (subjectInput.value.trim().length < 3) {
+        subjectErr.textContent = "Please enter at least 3 characters.";
+        subjectInput.classList.add("invalid");
+    } else {
+        subjectErr.textContent = "";
+        subjectInput.classList.remove("invalid");
+    }
+});
+
+subjectInput.addEventListener("input", function () {
+    if (subjectInput.classList.contains("invalid")) {
+        if (subjectInput.value.trim().length >= 3) {
+            subjectErr.textContent = "";
+            subjectInput.classList.remove("invalid");
         }
+    }
+});
 
-        clearError(field);
-        return true;
+// validate message on blur
+messageInput.addEventListener("blur", function () {
+    if (messageInput.value.trim().length === 0) {
+        messageErr.textContent = "This field is required.";
+        messageInput.classList.add("invalid");
+    } else if (messageInput.value.trim().length < 10) {
+        messageErr.textContent = "Needs to be at least 10 characters.";
+        messageInput.classList.add("invalid");
+    } else {
+        messageErr.textContent = "";
+        messageInput.classList.remove("invalid");
+    }
+});
+
+messageInput.addEventListener("input", function () {
+    if (messageInput.classList.contains("invalid")) {
+        if (messageInput.value.trim().length >= 10) {
+            messageErr.textContent = "";
+            messageInput.classList.remove("invalid");
+        }
+    }
+});
+
+// EVERYTHING is validated on the submission
+form.addEventListener("submit", function (event) {
+    let allValid = true;
+
+    if (nameInput.value.trim().length < 2) {
+        nameErr.textContent = nameInput.value.trim().length === 0 ? "This field is required." : "Please enter at least 2 characters.";
+        nameInput.classList.add("invalid");
+        allValid = false;
     }
 
-    function showError(field, msg) {
-        field.err.textContent = msg;
-        field.el.classList.add("invalid");
+    if (emailInput.value.trim().length === 0 || !emailPattern.test(emailInput.value.trim())) {
+        emailErr.textContent = emailInput.value.trim().length === 0 ? "This field is required." : "Please enter a valid email address.";
+        emailInput.classList.add("invalid");
+        allValid = false;
     }
 
-    function clearError(field) {
-        field.err.textContent = "";
-        field.el.classList.remove("invalid");
+    if (subjectInput.value.trim().length < 3) {
+        subjectErr.textContent = subjectInput.value.trim().length === 0 ? "This field is required." : "Please enter at least 3 characters.";
+        subjectInput.classList.add("invalid");
+        allValid = false;
     }
 
-    // Validate on blur when user moves out of a field
-    Object.keys(fields).forEach(function (key) {
-        fields[key].el.addEventListener("blur", function () {
-            validateField(key);
-        });
+    if (messageInput.value.trim().length < 10) {
+        messageErr.textContent = messageInput.value.trim().length === 0 ? "This field is required." : "Needs to be at least 10 characters.";
+        messageInput.classList.add("invalid");
+        allValid = false;
+    }
 
-        // Feedback as they type
-        fields[key].el.addEventListener("input", function () {
-            if (fields[key].el.classList.contains("invalid")) {
-                validateField(key);
-            }
-        });
-    });
-
-    // EVERYTHING is validated on the submission
-    form.addEventListener("submit", function (event) {
-        let allValid = true;
-        Object.keys(fields).forEach(function (key) {
-            const ok = validateField(key);
-            if (!ok) allValid = false;
-        });
-
-        if (!allValid) {
-            event.preventDefault();
-            // Focus the first invalid field
-            const firstInvalid = form.querySelector(".invalid");
-            if (firstInvalid) firstInvalid.focus();
-        }
-    });
-
-})();
+    if (!allValid) {
+        event.preventDefault();
+        const firstInvalid = form.querySelector(".invalid");
+        if (firstInvalid) firstInvalid.focus();
+    }
+});
